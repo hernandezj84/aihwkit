@@ -192,7 +192,7 @@ def train(model, train_set):
         # Decay learning rate if needed.
         scheduler.step()
 
-    dist.all_gather(total_time, torch.Tensor(time()-time_init).to(device))
+    dist.all_gather(total_time, torch.as_tensor(time()-time_init).to(device))
 
     if rank == 0:
         avg_train_time = torch.mean(torch.cat(total_time, 0))
@@ -231,7 +231,7 @@ def test_evaluation(model, val_set):
         total_images += labels.size(0)
         predicted_ok += (predicted == labels).sum().item()
 
-    dist.all_gather(acc_list, torch.Tensor(predicted_ok/total_images).to(device))
+    dist.all_gather(acc_list, torch.as_tensor(predicted_ok/total_images).to(device))
 
     if rank == 0:
         acc = torch.mean(torch.cat(acc_list, 0))
@@ -270,7 +270,7 @@ def main():
 
 if __name__ == '__main__':
     # Execute only if run as the entry point into the program
-    world_size = 2
+    world_size = 4
     print("Device count: ", world_size)
     processes = []
     ctx = mp.get_context("spawn")
