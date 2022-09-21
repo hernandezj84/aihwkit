@@ -270,7 +270,7 @@ def main():
 
 if __name__ == '__main__':
     # Execute only if run as the entry point into the program
-    world_size = 4
+    world_size = 2
     print("Device count: ", world_size)
     processes = []
     ctx = mp.get_context("spawn")
