@@ -20,13 +20,14 @@ option(RPU_USE_FASTRAND "Use fastrand" OFF)
 
 set(RPU_BLAS "OpenBLAS" CACHE STRING "BLAS backend of choice (OpenBLAS, MKL)")
 set(RPU_CUDA_ARCHITECTURES "60" CACHE STRING "Target CUDA architectures")
-
 # Internal variables.
 set(CUDA_TARGET_PROPERTIES POSITION_INDEPENDENT_CODE ON
                            CUDA_RESOLVE_DEVICE_SYMBOLS ON
                            CUDA_SEPARABLE_COMPILATION ON
                            CXX_STANDARD 11
                            POSITION_INDEPENDENT_CODE ON)
+
+add_definitions(-D_GLIBCXX_USE_CXX11_ABI=1)
 
 # Append the virtualenv library path to cmake.
 if(DEFINED ENV{VIRTUAL_ENV})
